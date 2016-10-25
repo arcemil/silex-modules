@@ -21,11 +21,18 @@ class UsersController implements ControllerProviderInterface
       // obtiene el nombre de usuario de la sesión
       $user = $app['session']->get('user');
 
+      // obtiene el listado de usuarios
+      $users = $app['session']->get('users');
+      if (!isset($users)) {
+        $users = array();
+      }
+      
       // ya ingreso un usuario ?
       if ( isset( $user ) && $user != '' ) {
         // muestra la plantilla
         return $app['twig']->render('Users/users.list.html.twig', array(
-          'user' => $user
+          'user' => $user,
+          'users' => $users
         ));
 
       } else {
@@ -56,7 +63,32 @@ class UsersController implements ControllerProviderInterface
 
     // hace un bind
     })->bind('users-edit');
+    
+    $controller->post('/save', function( Request $request ) use ( $app ){
+      
+      // obtiene los usuarios de la sesión
+      $users = $app['session']->get('users');
+      if (!isset($users)) {
+        $users = array();
+      }
+      
+      // agrega el nuevo usuario
+      $users[] = array(
+        'nombre' => $request->get('nombre'),
+         'apellido' => $request->get('apellido'),
+         'direccion' => $request->get('direccion'),
+         'email' => $request->get('email'),
+         'telefono' => $request->get('telefono')
+      );
+      
+      // actualiza los datos en sesión
+      $app['session']->set('users', $users);
 
+      // muestra la lista de usuarios
+      return $app->redirect( $app['url_generator']->generate('users-list') );
+    })->bind('users-save');
+    
+    
     return $controller;
   }
 

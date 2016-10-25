@@ -25,7 +25,7 @@ $app->get('/', function() use($app) {
 // Controladores por cada módulo
 // =============================
 
-$app->mount('login', new App\Login\LoginController());
+$app->mount('/login', new App\Login\LoginController());
 $app->mount('/users', new App\Users\UsersController());
 
 // Corre la Aplicación
