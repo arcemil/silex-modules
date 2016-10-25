@@ -26,7 +26,7 @@ class UsersController implements ControllerProviderInterface
       if (!isset($users)) {
         $users = array();
       }
-      
+
       // ya ingreso un usuario ?
       if ( isset( $user ) && $user != '' ) {
         // muestra la plantilla
@@ -43,8 +43,8 @@ class UsersController implements ControllerProviderInterface
     // hace un bind
     })->bind('users-list');
 
-    // la ruta "/users/edit"
-    $controller->get('/edit', function() use($app) {
+    // la ruta "/users/new"
+    $controller->get('/new', function() use($app) {
 
       // obtiene el nombre de usuario de la sesión
       $user = $app['session']->get('user');
@@ -53,7 +53,15 @@ class UsersController implements ControllerProviderInterface
       if ( isset( $user ) && $user != '' ) {
         // muestra la plantilla
         return $app['twig']->render('Users/users.edit.html.twig', array(
-          'user' => $user
+          'user' => $user,
+          'index' => '',
+          'user_to_edit' => array(
+              'nombre' => '',
+              'apellido' => '',
+              'direccion' => '',
+              'email' => '',
+              'telefono' => ''
+            )
         ));
 
       } else {
@@ -62,33 +70,99 @@ class UsersController implements ControllerProviderInterface
       }
 
     // hace un bind
-    })->bind('users-edit');
-    
-    $controller->post('/save', function( Request $request ) use ( $app ){
-      
+    })->bind('users-new');
+
+    // la ruta "/users/edit"
+    $controller->get('/edit/{index}', function($index) use($app) {
+
+      // obtiene el nombre de usuario de la sesión
+      $user = $app['session']->get('user');
+
       // obtiene los usuarios de la sesión
       $users = $app['session']->get('users');
       if (!isset($users)) {
         $users = array();
       }
-      
-      // agrega el nuevo usuario
-      $users[] = array(
-        'nombre' => $request->get('nombre'),
-         'apellido' => $request->get('apellido'),
-         'direccion' => $request->get('direccion'),
-         'email' => $request->get('email'),
-         'telefono' => $request->get('telefono')
-      );
-      
+
+      // no ha ingresado el usuario (no ha hecho login) ?
+      if ( !isset( $user ) || $user == '' ) {
+        // redirige el navegador a "/login"
+        return $app->redirect( $app['url_generator']->generate('login'));
+
+      // no existe un usuario en esa posición ?
+      } else if ( !isset($users[$index])) {
+        // muestra el formulario de nuevo usuario
+        return $app->redirect( $app['url_generator']->generate('users-new') );
+
+      } else {
+        // muestra la plantilla
+        return $app['twig']->render('Users/users.edit.html.twig', array(
+          'user' => $user,
+          'index' => $index,
+          'user_to_edit' => $users[$index]
+        ));
+
+      }
+
+    // hace un bind
+    })->bind('users-edit');
+
+    $controller->post('/save', function( Request $request ) use ( $app ){
+
+      // obtiene los usuarios de la sesión
+      $users = $app['session']->get('users');
+      if (!isset($users)) {
+        $users = array();
+      }
+
+      // index no está incluido en la petición
+      $index = $request->get('index');
+      if ( !isset($index) || $index == '' ) {
+        // agrega el nuevo usuario
+        $users[] = array(
+          'nombre' => $request->get('nombre'),
+          'apellido' => $request->get('apellido'),
+          'direccion' => $request->get('direccion'),
+          'email' => $request->get('email'),
+          'telefono' => $request->get('telefono')
+        );
+      } else {
+        // modifica el usuario en la posición $index
+        $users[$index] = array(
+          'nombre' => $request->get('nombre'),
+          'apellido' => $request->get('apellido'),
+          'direccion' => $request->get('direccion'),
+          'email' => $request->get('email'),
+          'telefono' => $request->get('telefono')
+        );
+      }
+
       // actualiza los datos en sesión
       $app['session']->set('users', $users);
 
       // muestra la lista de usuarios
       return $app->redirect( $app['url_generator']->generate('users-list') );
     })->bind('users-save');
-    
-    
+
+    $controller->get('/delete/{index}', function($index) use ($app) {
+
+      // obtiene los usuarios de la sesión
+      $users = $app['session']->get('users');
+      if (!isset($users)) {
+        $users = array();
+      }
+
+      // no existe un usuario en esa posición ?
+      if ( isset($users[$index])) {
+        unset ($users[$index]);
+        $app['session']->set('users', $users);
+      }
+
+      // muestra la lista de usuarios
+      return $app->redirect( $app['url_generator']->generate('users-list') );
+
+    })->bind('users-delete');
+
     return $controller;
   }
 

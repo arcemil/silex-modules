@@ -5,6 +5,9 @@
 {% block body %}
 
 <form class="form-horizontal" method="post" action="{{ url('users-save') }}">
+
+  <input type="hidden" name="index" value="{{ index }}">
+
   <fieldset>
 
     <!-- Titulo -->
@@ -14,7 +17,8 @@
       <label class="col-md-4 control-label" for="textinput">Nombre</label>
       <div class="col-md-4">
         <input type="text" class="form-control input-md"
-            name="nombre" placeholder="nombre del usuario" required="">
+            name="nombre" value="{{ user_to_edit.nombre }}"
+            placeholder="nombre del usuario" required="">
       </div>
     </div>
 
@@ -22,7 +26,8 @@
       <label class="col-md-4 control-label" for="textinput">Apellido</label>
       <div class="col-md-4">
         <input type="text" class="form-control input-md"
-            name="apellido" placeholder="apellido del usuario" required="">
+            name="apellido" value="{{ user_to_edit.apellido }}"
+            placeholder="apellido del usuario" required="">
       </div>
     </div>
 
@@ -30,7 +35,8 @@
       <label class="col-md-4 control-label" for="textinput">Dirección</label>
       <div class="col-md-4">
         <input type="text" class="form-control input-md"
-            name="direccion" placeholder="dirección del usuario" required="">
+            name="direccion" value="{{ user_to_edit.direccion }}"
+            placeholder="dirección del usuario" required="">
       </div>
     </div>
 
@@ -38,7 +44,8 @@
       <label class="col-md-4 control-label" for="textinput">Email</label>
       <div class="col-md-4">
         <input type="text" class="form-control input-md"
-            name="email" placeholder="correo electrónico" required="">
+            name="email" value="{{ user_to_edit.email }}"
+            placeholder="correo electrónico" required="">
       </div>
     </div>
 
@@ -46,7 +53,8 @@
       <label class="col-md-4 control-label" for="textinput">Teléfono</label>
       <div class="col-md-4">
         <input type="text" class="form-control input-md"
-            name="telefono" placeholder="teléfono del usuario" required="">
+            name="telefono" value="{{ user_to_edit.telefono}}"
+            placeholder="teléfono del usuario" required="">
       </div>
     </div>
 
