@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block title 'Editar Usuario' %}
+{% block title 'Editar Receta' %}
 
 {% block body %}
 
@@ -11,50 +11,55 @@
   <fieldset>
 
     <!-- Titulo -->
-    <legend>Crear o Editar Usuario</legend>
+    <legend>Crear o Editar Receta</legend>
 
     <div class="form-group">
       <label class="col-md-4 control-label" for="textinput">Nombre</label>
       <div class="col-md-4">
         <input type="text" class="form-control input-md"
             name="nombre" value="{{ user_to_edit.nombre }}"
-            placeholder="nombre del usuario" required="">
+            placeholder="nombre de la receta" required="">
       </div>
     </div>
 
     <div class="form-group">
-      <label class="col-md-4 control-label" for="textinput">Apellido</label>
+      <label class="col-md-4 control-label" for="textinput">Dificultad</label>
       <div class="col-md-4">
-        <input type="text" class="form-control input-md"
-            name="apellido" value="{{ user_to_edit.apellido }}"
-            placeholder="apellido del usuario" required="">
+      <select name="dificultad" class="form-control input-md">
+         <option value="baja">Baja</option>
+         <option value="media">Media</option>
+         <option value="dificil">Dificil</option>
+      </select>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="col-md-4 control-label" for="textinput">Dirección</label>
+      <label class="col-md-4 control-label" for="textinput">Tiempo</label>
       <div class="col-md-4">
         <input type="text" class="form-control input-md"
-            name="direccion" value="{{ user_to_edit.direccion }}"
-            placeholder="dirección del usuario" required="">
+            name="tiempo" value="{{ user_to_edit.tiempo }}"
+            placeholder="tiempo de preparacion" required="">
       </div>
     </div>
 
     <div class="form-group">
-      <label class="col-md-4 control-label" for="textinput">Email</label>
+      <label class="col-md-4 control-label" for="textinput">Tipo</label>
       <div class="col-md-4">
-        <input type="text" class="form-control input-md"
-            name="email" value="{{ user_to_edit.email }}"
-            placeholder="correo electrónico" required="">
+         <select name="tipo" class="form-control input-md">
+         <option value="plato fuerte">Plato fuerte</option>
+         <option value="sopa">sopa</option>
+         <option value="postre">Postre</option>
+         <option value="Bebida">Bebida</option>
+      </select>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="col-md-4 control-label" for="textinput">Teléfono</label>
+      <label class="col-md-4 control-label" for="textinput">Costo</label>
       <div class="col-md-4">
         <input type="text" class="form-control input-md"
-            name="telefono" value="{{ user_to_edit.telefono}}"
-            placeholder="teléfono del usuario" required="">
+            name="costo" value="{{ user_to_edit.costo}}"
+            placeholder="costo para realizar la receta" required="">
       </div>
     </div>
 

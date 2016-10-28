@@ -57,10 +57,10 @@ class UsersController implements ControllerProviderInterface
           'index' => '',
           'user_to_edit' => array(
               'nombre' => '',
-              'apellido' => '',
-              'direccion' => '',
-              'email' => '',
-              'telefono' => ''
+              'dificultad' => '',
+              'tiempo' => '',
+              'tipo' => '',
+              'costo' => ''
             )
         ));
 
@@ -121,19 +121,19 @@ class UsersController implements ControllerProviderInterface
         // agrega el nuevo usuario
         $users[] = array(
           'nombre' => $request->get('nombre'),
-          'apellido' => $request->get('apellido'),
-          'direccion' => $request->get('direccion'),
-          'email' => $request->get('email'),
-          'telefono' => $request->get('telefono')
+          'dificultad' => $request->get('dificultad'),
+          'tiempo' => $request->get('tiempo'),
+          'tipo' => $request->get('tipo'),
+          'costo' => $request->get('costo')
         );
       } else {
         // modifica el usuario en la posición $index
         $users[$index] = array(
           'nombre' => $request->get('nombre'),
-          'apellido' => $request->get('apellido'),
-          'direccion' => $request->get('direccion'),
-          'email' => $request->get('email'),
-          'telefono' => $request->get('telefono')
+          'dificultad' => $request->get('dificultad'),
+          'tiempo' => $request->get('tiempo'),
+          'tipo' => $request->get('tipo'),
+          'costo' => $request->get('costo')
         );
       }
 

@@ -8,7 +8,7 @@
 	<div class="row">
 
     <div class="col-md-12">
-      <legend>LIsta de Usuarios</legend>
+      <legend>Lista de Recetas</legend>
 
       <div class="table-responsive">
 
@@ -16,10 +16,10 @@
 
           <thead>
             <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Dirección</th>
-            <th>Email</th>
-            <th>Teléfono</th>
+            <th>Dificultad</th>
+            <th>Tiempo</th>
+            <th>Tipo</th>
+            <th>Costo</th>
 
             <th>Editar</th>
             <th>Borrar</th>
@@ -30,10 +30,10 @@
             {% for index, u in users %}
             <tr>
               <td>{{ u.nombre }}</td>
-              <td>{{ u.apellido }}</td>
-              <td>{{ u.direccion }}</td>
-              <td>{{ u.email }}</td>
-              <td>{{ u.telefono }}</td>
+              <td>{{ u.dificultad }}</td>
+              <td>{{ u.tiempo }}</td>
+              <td>{{ u.tipo }}</td>
+              <td>{{ u.costo }}</td>
               <td>
                 <p data-placement="top" data-toggle="tooltip" title="Editar">
                   <a href="{{ url('users-edit', { index: index }) }}">
